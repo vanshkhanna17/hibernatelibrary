@@ -44,6 +44,15 @@ public class BookDao {
 		return s;
 	}
 	
+	public List<Books> find(String str) {
+		entityManagerFactory = HibernateOGMUtil.getEntityManagerFactory();
+
+		EntityManager em = entityManagerFactory.createEntityManager();
+		
+		List<Books> books = em.createQuery("select s from Books s where s.title= :name or s.author= :name", Books.class).setParameter("name", str).getResultList();
+		
+		return books;
+	}
 	public void update(Books s) {
 		entityManagerFactory = HibernateOGMUtil.getEntityManagerFactory();
 

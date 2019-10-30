@@ -35,8 +35,15 @@ public class AddBook extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BookDao sDao = new BookDao();
-		List<Books> books = sDao.findAll();
+		String srch = request.getParameter("srch");
+    	BookDao sDao = new BookDao();
+    	List<Books> books;
+    	if(srch==null || srch.equals("r")) {
+    		books = sDao.findAll();
+    	}
+    	else {
+    		books = sDao.find(srch);
+    	}
 		request.setAttribute("books", books);
 		request.getRequestDispatcher("view.jsp").forward(request, response);
 		
